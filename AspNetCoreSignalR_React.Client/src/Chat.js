@@ -36,6 +36,8 @@ class Chat extends Component {
     this.state.hubConnection
       .invoke('sendToAll', this.state.nick, this.state.message)
       .catch(err => console.error(err));
+
+      this.setState({message: ''});      
   };
 
   render() {
