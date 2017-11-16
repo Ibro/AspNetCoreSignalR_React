@@ -4,7 +4,7 @@ import { HubConnection } from '@aspnet/signalr-client';
 class Chat extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       nick: '',
       message: '',
@@ -30,8 +30,14 @@ class Chat extends Component {
         this.setState({ messages });
       });
     });
-  }
-  
+  };
+
+  sendMessage = () => {
+    this.state.hubConnection
+      .invoke('sendToAll', this.state.nick, this.state.message)
+      .catch(err => console.error(err));
+  };
+
   render() {
     return <div>Here goes chat</div>;
   }
