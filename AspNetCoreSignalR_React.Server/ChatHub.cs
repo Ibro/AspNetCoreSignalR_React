@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
 
 namespace AspNetCoreSignalR_React.Server
 {
     public class ChatHub : Hub
     {
-        public void SendToAll(string name, string message)
+        public async Task SendToAll(string name, string message)
         {
-            Clients.All.InvokeAsync("sendToAll", name, message);
+            await Clients.All.SendAsync("sendToAll", name, message);
         }
     }
 }
