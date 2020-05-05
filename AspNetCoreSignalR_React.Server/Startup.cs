@@ -15,6 +15,7 @@ namespace AspNetCoreSignalR_React.Server
                 builder
                     .AllowAnyMethod()
                     .AllowAnyHeader()
+                    .AllowCredentials()
                     .WithOrigins("http://localhost:3000");
             }));
 
@@ -22,16 +23,12 @@ namespace AspNetCoreSignalR_React.Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            app.UseRouting();
             app.UseCors("CorsPolicy");
 
-            app.UseSignalR(routes =>
+            app.UseEndpoints(routes =>
             {
                 routes.MapHub<ChatHub>("chat");
             });
